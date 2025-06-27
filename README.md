@@ -10,3 +10,22 @@ Currently, two official plugins are available:
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+
+## Running the Dev Build with Docker Compose
+
+To start the development server using Docker Compose, run:
+
+```sh
+docker compose up --build
+```
+
+This will build the image (if needed) and launch the app at [http://localhost:5002](http://localhost:5002).
+
+Any changes you make to the codebase will be automatically reflected in the running app thanks to hot reload.
+
+To stop and remove the containers, run:
+
+```sh
+docker compose down
+```
