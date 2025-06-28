@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { ProgressSpinner } from 'primereact/progressspinner';
 import { handleCallBack } from "../lib/utils";
 import {
   IDP_URL,
@@ -28,6 +29,6 @@ export default function SpotifyCallBack() {
   }, [navigate]);
 
   return (
-    <div>Processing login...</div>
+    <ProgressSpinner />
   )
 }
