@@ -4,3 +4,4 @@ build
 Dockerfile.dev
 docker-compose.yaml
 .gitignore
+.env

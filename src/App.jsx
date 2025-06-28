@@ -1,13 +1,16 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from "./components/Home";
+import SpotifyCallBack from './components/SpotifyCallBack';
 import './App.css'
-import MainPage from "./pages/MainPage.jsx";
 
-function App() {
 
+export default function App() {
   return (
-    <>
-      <MainPage/>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/callback" element={<SpotifyCallBack />} />
+      </Routes>
+    </Router>
   )
 }
-
-export default App
