@@ -1,3 +1,12 @@
+/**
+ * Utility functions for PKCE support and Spotify authorization.
+ * 
+ * Inspired by https://github.com/rmg-software/pkce-utils (shout out for this awesome work)
+ * and the official Spotify documentation for authorization code PKCE:
+ * https://developer.spotify.com/documentation/web-api/tutorials/code-pkce-flow
+ */
+
+
 /** * Redirects the user to the Spotify authorization page with PKCE support.
  *
  * @param {string} idpUrl - The base URL for Spotify's authorization endpoint.
