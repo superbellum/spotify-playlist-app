@@ -1,32 +1,29 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { handleCallBack } from "../lib/utils";
-import {
-  IDP_URL,
-  CLIENT_ID,
-  REDIRECT_URI,
-} from '../lib/constants';
+import { useAuth } from "../context/useAuth";
 
 
 export default function SpotifyCallBack() {
   const navigate = useNavigate();
+  const { handleRedirectCallback } = useAuth();
+  const [searchParams] = useSearchParams();
+
+  async function completeLogin() {
+    const success = await handleRedirectCallback();
+    navigate(success ? '/' : '/login');
+  }
 
   useEffect(() => {
-    const fetchToken = async () => {
-      const rawData = await handleCallBack(
-        IDP_URL,
-        CLIENT_ID,
-        REDIRECT_URI
-      );
-      if (rawData.access_token) {
-        sessionStorage.setItem('access_token', rawData.access_token);
-        navigate('/');
-      }
-    };
+    const error = searchParams.get('error');
+    if (error) {
+      console.error("Error during authentication:", error);
+      navigate('/login');
+      return;
+    }
 
-    fetchToken();
-  }, [navigate]);
+    completeLogin();
+  }, []);
 
   return (
     <ProgressSpinner />
