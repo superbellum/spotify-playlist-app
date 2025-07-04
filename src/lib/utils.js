@@ -22,7 +22,7 @@ export async function redirectToSpotifyAuth(
   scope,
   challenge
 ) {
-  sessionStorage.setItem("code_verifier", challenge.code_verifier);
+  localStorage.setItem("code_verifier", challenge.code_verifier);
 
   const authUrl = new URL(`${idpUrl}/authorize`);
   authUrl.search = new URLSearchParams({
@@ -93,12 +93,14 @@ export async function handleCallBack(
   const code = urlParams.get("code");
   
   if (!code) {
-    throw new Error("Authorization code not found in URL parameters.");
+    console.log("Authorization code not found in URL parameters.");
+    return null;
   }
 
-  const codeVerifier = sessionStorage.getItem("code_verifier");
+  const codeVerifier = localStorage.getItem("code_verifier");
   if (!codeVerifier) {
-    throw new Error("Code verifier not found in session storage.");
+    console.log("Code verifier not found in local storage.");
+    return null;
   }
 
   return exchangeCode(

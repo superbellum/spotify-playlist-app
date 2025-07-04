@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { createContext, useContext, useState, useEffect } from 'react';
 import pkceChallenge from "pkce-challenge";
 import { handleCallBack, redirectToSpotifyAuth } from "../lib/utils";
 import {
@@ -19,12 +18,11 @@ export function useAuth() {
 
 
 export function AuthProvider ({ children }) {
-  const navigate = useNavigate();
   const [accessToken, setAccessToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = sessionStorage.getItem('access_token');
+    const token = localStorage.getItem('access_token');
     if (token) {
       setAccessToken(token);
     } else {
@@ -38,16 +36,14 @@ export function AuthProvider ({ children }) {
       return;
     else {
       const challenge = await pkceChallenge(128);
-      sessionStorage.setItem("code_verifier", challenge.code_verifier);
+      localStorage.setItem("code_verifier", challenge.code_verifier);
       await redirectToSpotifyAuth(IDP_URL, CLIENT_ID, REDIRECT_URI, SCOPE, challenge);
     }
   };
 
   function logout() {
     setAccessToken(null);
-    sessionStorage.removeItem('code_verifier');
-    sessionStorage.removeItem('access_token');
-    navigate('/login');
+    localStorage.clear();
   };
 
   async function handleRedirectCallback() {
@@ -57,7 +53,7 @@ export function AuthProvider ({ children }) {
             REDIRECT_URI
     );
     if (rawData && rawData.access_token) {
-      sessionStorage.setItem('access_token', rawData.access_token);
+      localStorage.setItem('access_token', rawData.access_token);
       setAccessToken(rawData.access_token);
       return true;
     }
