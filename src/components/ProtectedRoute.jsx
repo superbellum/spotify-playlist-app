@@ -1,8 +1,8 @@
 import { Outlet, Navigate } from 'react-router-dom';
+import { useAuth } from '../context/useAuth';
 
 export default function ProtectedRoute() {
-  const isAuthenticated = sessionStorage.getItem('access_token');
-  console.log("isAuthenticated: ", isAuthenticated);
+  const { accessToken } = useAuth();
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
+  return accessToken ? <Outlet /> : <Navigate to="/login" replace />;
 }
