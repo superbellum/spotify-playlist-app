@@ -20,7 +20,7 @@ To start the development server using Docker Compose, run:
 docker compose up --build
 ```
 
-This will build the image and launch the app at [http://localhost:5002](http://localhost:5002).
+This will build the image and launch the app at [http://127.0.0.1:5002](http://127.0.0.1:5002).
 
 Any changes you make to the codebase will be automatically reflected in the running app thanks to hot reload.
 
